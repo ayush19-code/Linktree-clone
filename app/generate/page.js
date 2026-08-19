@@ -4,6 +4,7 @@ import React, { useState, Suspense } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "next/navigation";
+import { saveClaimedHandle } from "@/lib/storage";
 
 const GenerateContent = () => {
   const searchParams = useSearchParams();
@@ -89,6 +90,7 @@ const GenerateContent = () => {
 
       if (result.success) {
         toast.success(result.message);
+        saveClaimedHandle(handle);
 
         setLinks([
           {
@@ -110,29 +112,29 @@ const GenerateContent = () => {
   };
 
   return (
-    <div className="bg-[#E9C0E9] min-h-screen grid grid-cols-1 md:grid-cols-2">
+    <div className="bg-[#E9C0E9] min-h-screen grid grid-cols-1 lg:grid-cols-2">
       
       {/* LEFT SIDE */}
-      <div className="col1 flex justify-center items-center flex-col text-gray-900 pt-28 pb-10">
-        <div className="flex flex-col gap-5 my-8">
+      <div className="col1 flex justify-center items-center flex-col text-gray-900 pt-24 sm:pt-28 lg:pt-32 pb-10 px-4 sm:px-6 md:px-8 w-full max-w-2xl mx-auto lg:max-w-none">
+        <div className="flex flex-col gap-5 my-6 sm:my-8 w-full max-w-xl">
 
-          <h1 className="font-bold text-4xl">
+          <h1 className="font-bold text-3xl sm:text-4xl text-center sm:text-left">
             Create your Bittree
           </h1>
 
           {/* STEP 1 */}
-          <div className="item">
-            <h2 className="font-semibold text-2xl">
+          <div className="item flex flex-col">
+            <h2 className="font-semibold text-xl sm:text-2xl">
               Step 1: Claim your Handle
             </h2>
 
-            <div className="mx-4">
+            <div className="my-2">
               <input
                 value={handle || ""}
                 onChange={(e) => {
                   sethandle(e.target.value);
                 }}
-                className="px-4 py-2 my-2 focus:outline-pink-500 rounded-full"
+                className="px-4 py-2 my-1 focus:outline-pink-500 rounded-full w-full max-w-md bg-white text-black"
                 type="text"
                 placeholder="Choose a Handle"
               />
@@ -140,15 +142,15 @@ const GenerateContent = () => {
           </div>
 
           {/* STEP 2 */}
-          <div className="item">
-            <h2 className="font-semibold text-2xl">
+          <div className="item flex flex-col">
+            <h2 className="font-semibold text-xl sm:text-2xl mb-2">
               Step 2: Add Links
             </h2>
 
             {links &&
               links.map((item, index) => {
                 return (
-                  <div key={index} className="mx-4">
+                  <div key={index} className="flex flex-col sm:flex-row gap-2 my-1 w-full max-w-xl">
 
                     <input
                       value={item.linktext || ""}
@@ -159,7 +161,7 @@ const GenerateContent = () => {
                           e.target.value
                         );
                       }}
-                      className="px-4 py-2 mx-2 my-2 focus:outline-pink-500 rounded-full"
+                      className="px-4 py-2 focus:outline-pink-500 rounded-full flex-1 min-w-0 bg-white text-black"
                       type="text"
                       placeholder="Enter link text"
                     />
@@ -173,7 +175,7 @@ const GenerateContent = () => {
                           item.linktext
                         );
                       }}
-                      className="px-4 py-2 mx-2 my-2 focus:outline-pink-500 rounded-full"
+                      className="px-4 py-2 focus:outline-pink-500 rounded-full flex-1 min-w-0 bg-white text-black"
                       type="text"
                       placeholder="Enter link"
                     />
@@ -184,26 +186,26 @@ const GenerateContent = () => {
 
             <button
               onClick={addLink}
-              className="p-5 py-2 mx-2 bg-slate-900 text-white font-bold rounded-3xl"
+              className="px-5 py-2 my-2 bg-slate-900 text-white font-bold rounded-3xl w-fit hover:bg-slate-800 transition-colors"
             >
               + Add Link
             </button>
           </div>
 
           {/* STEP 3 */}
-          <div className="item">
-            <h2 className="font-semibold text-2xl">
+          <div className="item flex flex-col">
+            <h2 className="font-semibold text-xl sm:text-2xl mb-2">
               Step 3: Add Picture and Description
             </h2>
 
-            <div className="mx-4 flex flex-col">
+            <div className="flex flex-col gap-2 max-w-md w-full">
 
               <input
                 value={pic || ""}
                 onChange={(e) => {
                   setpic(e.target.value);
                 }}
-                className="px-4 py-2 mx-2 my-2 focus:outline-pink-500 rounded-full"
+                className="px-4 py-2 focus:outline-pink-500 rounded-full w-full bg-white text-black"
                 type="text"
                 placeholder="Enter link to your Picture"
               />
@@ -213,7 +215,7 @@ const GenerateContent = () => {
                 onChange={(e) => {
                   setdesc(e.target.value);
                 }}
-                className="px-4 py-2 mx-2 my-2 focus:outline-pink-500 rounded-full"
+                className="px-4 py-2 focus:outline-pink-500 rounded-full w-full bg-white text-black"
                 type="text"
                 placeholder="Enter description"
               />
@@ -226,7 +228,7 @@ const GenerateContent = () => {
                   links[0].linktext === ""
                 }
                 onClick={submitLinks}
-                className="disabled:bg-slate-500 p-5 py-2 mx-2 w-fit my-5 bg-slate-900 text-white font-bold rounded-3xl"
+                className="disabled:bg-slate-500 px-6 py-2.5 my-3 w-fit bg-slate-900 text-white font-bold rounded-3xl hover:bg-slate-800 transition-colors"
               >
                 Create your BitTree
               </button>
@@ -238,9 +240,9 @@ const GenerateContent = () => {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="col2 w-full h-screen bg-[#E9C0E9]">
+      <div className="col2 w-full flex items-center justify-center p-4 lg:p-10 bg-[#E9C0E9] min-h-[300px] lg:min-h-screen">
         <img
-          className="h-full object-contain"
+          className="w-full max-w-md lg:max-w-xl h-auto object-contain max-h-[50vh] lg:max-h-[80vh]"
           src="/generate.png"
           alt="Generate your links"
         />
